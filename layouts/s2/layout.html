@@ -1,0 +1,71 @@
+<load target="s2d.css" />
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$('.vgnb ul > li').bind('mouseover', openSubMenu);
+		$('.vgnb ul > li').bind('mouseout', closeSubMenu);		
+		function openSubMenu() {
+			$(this).find('ul').css('visibility', 'visible');	
+		};		
+		function closeSubMenu() {
+			$(this).find('ul').css('visibility', 'hidden');	
+		};				   
+	});
+</script>
+<div class="vwrap">
+<div class="vgnb">
+			<ul>
+				<li loop="$main_menu->list=>$key1,$val1" class="active"|cond="$val1['selected']">
+					<a href="{$val1['href']}" target="_blank"|cond="$val1['open_window']=='Y'">{$val1['link']}</a>
+					<ul cond="$val1['list']">
+						<li loop="$val1['list']=>$key2,$val2" class="active2"|cond="$val2['selected']"><a href="{$val2['href']}" target="_blank"|cond="$val2['open_window']=='Y'">{$val2['link']}</a></li>
+					</ul>
+				</li>
+			</ul>
+<div class="vlogin">
+<!--@if($is_logged)-->
+<a href="{getUrl('act','dispMemberInfo')}">회원정보</a>
+<a href="{getUrl('act','dispMemberLogout')}">로그아웃</a>
+<!--@else-->
+<div class="vlogpop" id="logins">
+<!--%import("./filter/login.xml")-->
+<script>
+function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }
+</script>
+    <form action="./" method="post" onsubmit="return procFilter(this, widget_login)" id="formLogin">
+		<input name="user_id" type="text" id="uid" title="{$lang->user_id}" />
+	    <input name="password" type="password" id="upw" title="{$lang->password}" />
+	    <input name="login" type="submit" value="{$lang->cmd_login}"/>
+        </form>
+</div>
+<a href="#" onclick="toggle_visibility('logins');">로그인</a>
+<a href="{getUrl('act','dispMemberSignUpForm')}">회원가입</a>
+<!--@end-->
+</div>
+</div>
+<a class="vlinkh" href="{$layout_info->headerlink}">
+<div class="vheader" style="background-image:url('{$layout_info->background}');">
+<div class="vheaderdiv"><span class="vheadersay" style="color:{$layout_info->spancolor};">{$layout_info->vheadersay}</span>
+</div>
+</div>
+</a>
+<div class="vbody">
+<div class="vcontent">
+{$content}
+</div>
+<div class="vwidget">
+{$layout_info->vwidget}
+</div>
+<div class="vfooterss">
+</div>
+<div class="vfooter">
+{$layout_info->vfooter}<br/>
+Designed by SXE
+</div>
+</div>
+</div>
